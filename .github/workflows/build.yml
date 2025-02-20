@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: "3.9"
 
       - name: Install Dependencies
         run: |
@@ -25,7 +25,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Build Windows Executable
-        run: pyinstaller --onefile --windowed --name wifi_scanner main.py
+        run: pyinstaller --onedir --windowed --upx-dir="C:\upx" --name wifi_scanner main.py
 
       - name: Add License to Build
         run: cp LICENSE dist/LICENSE.txt  # 复制 GPL 许可证
@@ -46,7 +46,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: "3.9"
 
       - name: Install Dependencies
         run: |
