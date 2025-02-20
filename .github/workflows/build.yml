@@ -25,7 +25,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Build Windows Executable
-        run: pyinstaller --onedir --windowed --upx-dir="C:\upx" --name wifi_scanner main.py
+        run: pyinstaller --onedir --windowed --distpath dist --upx-dir="C:\upx" --name wifi_scanner main.py || exit 1
 
       - name: Add License to Build
         run: cp LICENSE dist/LICENSE.txt  # 复制 GPL 许可证
