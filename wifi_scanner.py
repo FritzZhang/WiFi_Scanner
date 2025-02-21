@@ -20,8 +20,11 @@ def scan_wifi():
 
 # scan available Wi-Fi networks on windows
     elif system == "Windows":
+        startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW # completely hide the CMD window on Windows
+
         result = subprocess.run(["netsh", "wlan", "show", "network", "mode=Bssid"], capture_output=True, text=True,
-                                encoding='utf-8')
+                                encoding='utf-8', startupinfo=startupinfo)
         output = result.stdout.strip().split("\n")
 
         ssid = None
