@@ -1,14 +1,26 @@
 import tkinter as tk
 from tkinter import ttk
 from wifi_scanner import scan_wifi
+import os
+
+
+def get_version():
+    """ 从 version.txt 读取版本号 """
+    version_file = "version.txt"
+    if os.path.exists(version_file):
+        with open(version_file, "r") as f:
+            return f.read().strip()
+    return "Unknown Version"
 
 
 class WiFiScannerApp:
+
     def __init__(self, root):
         self.sort_descending = None
         self.root = root
-        self.root.title("Wi-Fi Signal Testing Tool")
+        self.root.title(f"Wi-Fi Signal Testing Tool - v{get_version()}")
         self.root.geometry("400x300")
+
 
         # self.sort_descending = True  # 默认信号强的排在前
 
