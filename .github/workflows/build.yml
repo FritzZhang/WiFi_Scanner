@@ -7,6 +7,35 @@ on:
   workflow_dispatch:  # 允许手动触发
 
 jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Read Current Version
+        id: get_version
+        run: echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
+
+      - name: Bump Version (Patch)
+        run: |
+          OLD_VERSION=$(cat version.txt)
+          NEW_VERSION=$(echo $OLD_VERSION | awk -F. -v OFS=. '{$NF += 1 ; print}')
+          echo $NEW_VERSION > version.txt
+          echo "New Version: $NEW_VERSION"
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add version.txt
+          git commit -m "🚀 Bump version to $NEW_VERSION"
+          git push origin main
+
+      - name: Upload version file
+        uses: actions/upload-artifact@v4
+        with:
+          name: version
+          path: version.txt
+
+
   build-windows:
     runs-on: windows-latest
     steps:
